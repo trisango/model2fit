@@ -1,16 +1,18 @@
 Package: model2fit
-Title: What the Package Does (One Line, Title Case)
+Title: Create scatter plot with fitted linear model
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Trisa",
+           family = "Ngo",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+           email = "trisa.ngo@dal.ca")
+Description: This package includes the scatter_lm fuction. This function creates a scatter plot with a fitted linear model. It can be used to explore preliminary data by visualizing covariance and variance between selected variables. 
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Suggests: 
+    testthat
+Imports: 
+    ggplot2
