@@ -9,8 +9,8 @@
 #' @export
 #'
 scatter_lm <- function(x, y, df) {
-  ggplot2::ggplot(df, aes_string(x, y)) +
-    geom_point(na.rm = TRUE) +
-    geom_smooth(method = "lm", se = TRUE, colour = "purple", na.rm = TRUE)+
-    theme_classic()
+  ggplot2::ggplot(df, ggplot2::aes_string(x, y)) +
+    ggplot2::geom_point(na.rm = TRUE) +
+    ggplot2::geom_smooth(method = "lm", se = TRUE, colour = "purple", na.rm = TRUE)+
+    ggplot2::theme_classic()
 }

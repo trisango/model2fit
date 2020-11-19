@@ -1,6 +1,6 @@
 test_that("Plot returns ggplot object",{
-  test1 <- scatter_lm('body_mass_g', 'bill_length_mm', palmerpenguins::penguins)
-  expect_is(test1, "ggplot")
+  test3 <- scatter_lm('body_mass_g', 'bill_length_mm', palmerpenguins::penguins)
+  expect_is(test3,"ggplot")
 })
 
 test_that("Plot uses correct data", {

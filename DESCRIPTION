@@ -6,7 +6,7 @@ Authors@R:
            family = "Ngo",
            role = c("aut", "cre"),
            email = "trisa.ngo@dal.ca")
-Description: This package includes the scatter_lm fuction. This function creates a scatter plot with a fitted linear model. It can be used to explore preliminary data by visualizing covariance and variance between selected variables. 
+Description: Provides capabilities of creating a scatter plot with a fitted linear model. It can be used to explore preliminary data by visualizing covariance and variance between selected variables. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -15,4 +15,5 @@ RoxygenNote: 7.1.1
 Suggests: 
     testthat
 Imports: 
-    ggplot2
+    ggplot2,
+    palmerpenguins
