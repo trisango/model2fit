@@ -1,0 +1,50 @@
+---
+title: "model2fit"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{model2fit}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(model2fit)
+```
+
+**Creating a Scatter plot and fit that plot with a linear model**
+
+A nice way to quickly identify trends and generate interest in a dataset is to visualize data interactions. In doing so, research questions may arise and this will further the research process. An easy way to visualize data is to plot it and then fit it into a model. 
+
+Luckily, the `scatter_lm` fuction in the `model2fit` package easily creates a scatter plot with a fitted linear model for us. It can be used to explore preliminary data by visualizing covariance and variance between selected variables. 
+
+Take the palmerpenguins dataset for example:
+
+```{r}
+palmerpenguins::penguins
+```
+
+Interesting. I wonder if there is some kind of relationship related to penguin mass and flipper length?
+
+**Input (Arguments)**
+
+- `x`: This input should be a class name of the dataset keeping in mind it will be plotted on the x-axis of the plot. Let's input the `body_mass_g` class as the `x` variable.
+
+- `y`: This input should be a class name of the dataset keeping in mind it will be plotted on the y-axis of the plot. Let's input the `flipper_length_mm` class as the `y` variable.
+
+- `df`: This input should be the name of your dataset in the format of a list containing both the `x` and `y` arguments. This argument will be `palmerpenguins::penguins`
+
+**Output**
+
+Now let's put all the variables into the fuction:
+```{r}
+scatter_lm('body_mass_g', 'flipper_length_mm', palmerpenguins::penguins)
+```
+
+Looks like a pretty strong relationship to me!
