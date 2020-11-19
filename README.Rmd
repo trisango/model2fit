@@ -15,40 +15,181 @@ knitr::opts_chunk$set(
 
 # model2fit
 
-<!-- badges: start -->
-<!-- badges: end -->
+The goal of `model2fit` is to create an output that utilizes a visual representation that allows an analyst to explore data. Identifying trends right off the bat can help ellicit more research questions and potential areas of research.
 
-The goal of model2fit is to ...
+*Note: This package is still being developed so stay tuned for more features to come*
+
 
 ## Installation
 
-You can install the released version of model2fit from [CRAN](https://CRAN.R-project.org) with:
+`model2fit` is not on CRAN yet, so the best way to install it is:
 
 ``` r
 devtools::install_github("trisango/model2fit")
 ```
 
-## Example
+## Basic Usage
 
-This is a basic example which shows you how to solve a common problem:
+The main component thus far of this package is the `scatter_lm()` function that creates a scatter plot and its associated linear model.
+
+This is a basic example which shows you two classes from the `palmerpenguins` dataset being tested and the resulting plot:
 
 ```{r example}
 library(model2fit)
 scatter_lm('body_mass_g', 'bill_length_mm', palmerpenguins::penguins)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+## Exercise 1.1: Development of the R Package 
 
-```{r cars}
-summary(cars)
+**1. `devtools` was loaded to set up the new package**
+```{r}
+#always load devtools in order to work with many features that help develop R packages
+library(devtools)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+**2. New package created in a directory on my computer**
+```{r}
+create_package("~/git_docs/model2fit")
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+
+**3. Initialize a Git repository and commit changes** 
+```{r}
+use_git()
+```
+
+**4. Make a new .R file for each function in your package and write the fuction in the script**
+```{r}
+use_r("scatter_lm")
+```
+
+```{r}
+#this is the function
+scatter_lm <- function(x, y, df) {
+  ggplot2::ggplot(df, ggplot2::aes_string(x, y)) +
+    ggplot2::geom_point(na.rm = TRUE) +
+    ggplot2::geom_smooth(method = "lm", se = TRUE, colour = "purple", na.rm = TRUE)+
+    ggplot2::theme_classic()
+}
+```
+
+**5. Test and make scatter_lm() available for experimentation**
+```{r}
+load_all()
+```
+
+**6. Check that all the moving parts of this package are still work**
+```{r}
+check()
+#Run this throughout the creation of the package to check for errors, warnings, and notes that could arise based on changes throughout the creation process.
+```
+
+**7. Description file**
+Fill metadata about the package including: title, author, email, role, package description in the R script.
+
+**8. License**
+First, check which license options you have.
+We use the MIT license as it is "simple and permissive" for anyone to use.
+```{r}
+use_mit_license("Trisa Ngo")
+```
+
+**9. Documentation**
+In order to render documentation for the function `scatter_lm` in the package `model2fit` we use the `roxygen2` by clicking on Code > Insert roxygen skeleton. The title and tags such as @param and @return are described. @export is provided to allow the analyst to use the function (become an external function not just internal).
+
+```{r}
+#' Create a scatter plot and fitted linear model
+#'
+#' @param x Class name of x-axis of dataset.
+#' @param y Class name of y-axis of dataset.
+#' @param df Name of dataset.
+#'
+#' @return
+#' A scatter plot containing a fitted linear model.
+#' @export
+#'
+scatter_lm <- function(x, y, df) {
+  ggplot2::ggplot(df, ggplot2::aes_string(x, y)) +
+    ggplot2::geom_point(na.rm = TRUE) +
+    ggplot2::geom_smooth(method = "lm", se = TRUE, colour = "purple", na.rm = TRUE)+
+    ggplot2::theme_classic()
+}
+```
+
+Then render the documentation
+```{r}
+document()
+```
+
+**10. Install and Restart**
+Now, with a minimum viable package, in the Build tab, hit the Install and Restart button to restart and install the new package onto your computer. 
+
+**11. Creating tests**
+Declare intent to write unit tests and to use the `testthat` package for this
+
+```{r}
+use_testthat()
+```
+
+Initialize a test file and name it:
+```{r}
+use_test("scatter_lm")
+```
+
+I added the following test that test for:
+1. Plot returns ggplot
+2. Plot uses correct data
+3. Printing ggplot object works
+
+```{r}
+test_that("Plot returns ggplot object",{
+  test3 <- scatter_lm('body_mass_g', 'bill_length_mm', palmerpenguins::penguins)
+  expect_is(test3,"ggplot")
+})
+
+test_that("Plot uses correct data", {
+  test2 <- scatter_lm('body_mass_g', 'bill_length_mm', palmerpenguins::penguins)
+  expect_that(palmerpenguins::penguins, equals(test2$data))
+})
+
+test_that("Printing ggplot object works", {
+  test5 <- scatter_lm('body_mass_g', 'bill_length_mm', palmerpenguins::penguins)
+  expect_error(print(test5), NA)
+})
+```
+
+Finally you can test that your tests work:
+```{r}
+test()
+```
+
+**12. Dependancies**
+Update code to specify dependant packages in R scrips (package::package function)
+
+So `ggplot` updates to `ggplot2::ggplot` and `penguins` updates to `palmerpengions::penguins`
+
+
+Specify which packages you will depend on so the Description File will update the Imports field. In this case, I depended on `ggplot2` and `palmerpenguins`
+```{r}
+use_package("ggplot2")
+use_package("palmerpenguins")
+```
+
+**13. Creating a README**
+Create a README.Rmd for the package that includes a description of package, installation details, and an example:
+```{r}
+use_readme_rmd()
+
+#Use this to knit, run checks, and create a .md
+build_readme()
+```
+
+
+**14. Creating and build a vignette**
+```{r}
+use_vignette("model2fit")
+
+#Use this to knit the vignette
+build_vignette()
+```
